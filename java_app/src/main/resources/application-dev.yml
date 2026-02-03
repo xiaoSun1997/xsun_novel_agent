@@ -1,0 +1,109 @@
+
+# 开发环境配置
+spring:
+  datasource:
+    url: jdbc:mysql://xx.xxx.xxx.xxx/xsun_novel_factory?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    username: root
+    password: xxxxx
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      initial-size: 1
+      min-idle: 10
+      max-active: 50
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 50
+      max-pool-prepared-statement-per-connection-size: 20
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+
+
+
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+
+#mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+#mybatis plus
+mybatis-plus:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.xsun_novel_factory.model.entity
+  global-config:
+    # 数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: auto
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: not_empty
+      #驼峰下划线转换
+      column-underline: true
+      #数据库大写下划线转换
+      #capital-mode: true
+      #逻辑删除配置
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      db-type: mysql
+    #刷新mapper 调试神器
+    refresh: false
+  # 原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+# Logging配置
+logging:
+  config:
+    classpath: log/logback.xml
+  level:
+    org:
+      wln.platform.model:
+        mapper: debug
+
+# GraphRAG 知识图谱服务配置
+graph:
+  rag:
+    service:
+      url: http://xx.xxx.xxx.xxx:8000
+
+# Milvus 向量存储服务配置
+milvus:
+  store:
+    service:
+      url: http://xx.xxx.xxx.xxx:8001
+
+
+qwen:
+  apikey: sk-your-api-key
+  baseUrl: https://dashscope.aliyuncs.com/compatible-mode/v1
+  model: qwen-plus
+  temperature: 1.5
+  timeout-seconds: 300
+
+deepseek:
+  apikey: sk-deepseek-key
+  baseUrl: https://api.deepseek.com
+  model: deepseek-reasoner
+  temperature: 1.5
+  timeout-seconds: 300

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xsun_novel_factory.model.mapper.SummaryMapper">
+
+    <resultMap id="BaseResultMap" type="com.xsun_novel_factory.model.entity.Summary">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="novelId" column="novel_id" jdbcType="BIGINT"/>
+            <result property="chapterRange" column="chapter_range" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,novel_id,chapter_range,
+        content
+    </sql>
+    
+    <!-- 根据小说ID和章节范围查询总结 -->
+    <select id="selectByChapterRange" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM summary
+        WHERE novel_id = #{novelId}
+        AND chapter_range = CONCAT(#{startChapter}, '-', #{endChapter})
+    </select>
+    
+    <!-- 根据小说ID查询最新总结 -->
+    <select id="selectLatestByNovelId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM summary
+        WHERE novel_id = #{novelId}
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
+</mapper>

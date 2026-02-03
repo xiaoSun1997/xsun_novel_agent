@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="generator.mapper.ChapterReviewMapper">
+
+    <resultMap id="BaseResultMap" type="com.xsun_novel_factory.model.entity.ChapterReview">
+            <id property="id" column="id" />
+            <result property="draftId" column="draft_id" />
+            <result property="decision" column="decision" />
+            <result property="scoreJson" column="score_json" />
+            <result property="issuesJson" column="issues_json" />
+            <result property="evidenceJson" column="evidence_json" />
+            <result property="reviewerVersion" column="reviewer_version" />
+            <result property="createdAt" column="created_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,draft_id,decision,score_json,issues_json,evidence_json,
+        reviewer_version,created_at
+    </sql>
+</mapper>

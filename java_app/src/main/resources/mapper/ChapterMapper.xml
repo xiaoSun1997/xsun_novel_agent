@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xsun_novel_factory.model.mapper.ChapterMapper">
+
+    <resultMap id="BaseResultMap" type="com.xsun_novel_factory.model.entity.Chapter">
+            <id property="id" column="id" />
+            <result property="novelId" column="novel_id" />
+            <result property="chapterNo" column="chapter_no" />
+            <result property="title" column="title" />
+            <result property="content" column="content" />
+            <result property="meta" column="meta" />
+            <result property="approvedFromDraftId" column="approved_from_draft_id" />
+            <result property="approvedAt" column="approved_at" />
+            <result property="version" column="version" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,novel_id,chapter_no,title,content,meta,
+        approved_from_draft_id,approved_at,version
+    </sql>
+    
+    <!-- 查询指定范围内的章节 -->
+    <select id="selectChaptersInRange" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> 
+        FROM chapter 
+        WHERE novel_id = #{novelId} 
+        AND chapter_no BETWEEN #{startChapter} AND #{endChapter}
+        ORDER BY chapter_no ASC
+    </select>
+</mapper>

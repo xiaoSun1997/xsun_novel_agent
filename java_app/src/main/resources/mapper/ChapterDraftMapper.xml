@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="generator.mapper.ChapterDraftMapper">
+
+    <resultMap id="BaseResultMap" type="com.xsun_novel_factory.model.entity.ChapterDraft">
+            <id property="id" column="id" />
+            <result property="novelId" column="novel_id" />
+            <result property="chapterNo" column="chapter_no" />
+            <result property="title" column="title" />
+            <result property="draftContent" column="draft_content" />
+            <result property="draftMeta" column="draft_meta" />
+            <result property="status" column="status" />
+            <result property="createdBy" column="created_by" />
+            <result property="lockVersion" column="lock_version" />
+            <result property="createdAt" column="created_at" />
+            <result property="updatedAt" column="updated_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,novel_id,chapter_no,title,draft_content,draft_meta,
+        status,created_by,lock_version,created_at,updated_at
+    </sql>
+</mapper>
