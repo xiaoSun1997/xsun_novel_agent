@@ -44,5 +44,5 @@ public interface GraphRagClient {
      * @return 逻辑检查结果响应
      */
     @PostMapping("/graph/check-logic")
-    GraphResponse checkLogic(@RequestBody CheckLogicReq req);
+    String checkLogic(@RequestBody CheckLogicReq req);
 }

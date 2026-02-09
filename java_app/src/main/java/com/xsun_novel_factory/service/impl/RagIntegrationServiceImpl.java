@@ -1,5 +1,6 @@
 package com.xsun_novel_factory.service.impl;
 
+import cn.hutool.json.JSONUtil;
 import com.xsun_novel_factory.feign.GraphRagClient;
 import com.xsun_novel_factory.feign.MilvusStoreClient;
 import com.xsun_novel_factory.model.dto.graph.CheckLogicReq;
@@ -78,8 +79,9 @@ public class RagIntegrationServiceImpl implements RagIntegrationService {
         req.setNovelId(novelId);
         req.setChapter(chapter);
         req.setContent(content);
-        
-        return graphRagClient.checkLogic(req);
+        String response1 = graphRagClient.checkLogic(req);
+        GraphResponse response = JSONUtil.toBean(response1,GraphResponse.class);
+        return response;
     }
 
     /**

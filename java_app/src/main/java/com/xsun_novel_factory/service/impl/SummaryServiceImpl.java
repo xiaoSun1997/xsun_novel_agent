@@ -39,7 +39,8 @@ public class SummaryServiceImpl implements SummaryService {
         // 创建新的总结
         Summary summary = new Summary();
         summary.setNovelId(novelId);
-        summary.setChapterRange(startChapter + "-" + endChapter);
+        summary.setStartChapterNo(startChapter);
+        summary.setEndChapterNo(endChapter);
         summary.setContent(summaryContent);
         
         summaryMapper.insert(summary);

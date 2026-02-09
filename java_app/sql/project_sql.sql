@@ -113,3 +113,7 @@ CREATE TABLE `summary`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '总结' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+ALTER TABLE `xsun_novel_factory`.`summary`
+    ADD COLUMN `start_chapter_no` int(0) NOT NULL COMMENT '开始章节号' AFTER `novel_id`;

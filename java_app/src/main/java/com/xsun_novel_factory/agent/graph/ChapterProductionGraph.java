@@ -93,8 +93,8 @@ public class ChapterProductionGraph {
                 .addNode("updateGraph", updateGraphNode())
                 // 检查是否为卷末/书末
                 .addNode("checkCompletion", checkCompletionNode())
-                // 生成章节总结
-                .addNode("summarize", summarizeNode())
+                // 生成章节总结 - 已有GRAPHRAG 去掉？
+//                .addNode("summarize", summarizeNode())
                 // 检查是否需要阶段性总结
                 .addNode("checkMilestone", checkMilestoneNode());
 
@@ -136,28 +136,19 @@ public class ChapterProductionGraph {
                 .addConditionalEdges("checkCompletion",
                         AsyncEdgeAction.edge_async(state -> {
                             String completionStatus = state.<String>value("completionStatus").orElse("CONTINUE");
-                            if ("VOLUME_END".equals(completionStatus)) {
-                                return "summarize"; // 卷结束，生成总结
-                            } else if ("BOOK_END".equals(completionStatus)) {
+                            if ("BOOK_END".equals(completionStatus)) {
                                 return END; // 全书结束
                             } else {
                                 return "checkMilestone"; // 继续写作
                             }
                         }),
-                        Map.of("summarize", "summarize", END, END, "checkMilestone", "checkMilestone"))
-                .addEdge("summarize", "checkMilestone")
+                        Map.of( END, END, "checkMilestone", "checkMilestone"))
                 .addConditionalEdges("checkMilestone",
                         AsyncEdgeAction.edge_async(state -> {
-                            boolean needsMilestoneSummary = state.<Boolean>value("needsMilestoneSummary").orElse(false);
-                            if (needsMilestoneSummary) {
-                                return "summarize"; // 需要阶段性总结
-                            } else {
-                                return "generateChapter"; // 继续写作下一章
-                            }
+                            return "retrieveRefs"; // 继续写作下一章
                         }),
                         Map.of(
-                                "summarize", "summarize",
-                                "generateChapter", "generateChapter"
+                                "retrieveRefs", "retrieveRefs"
                         ));
 
         // 关键修改：使用 CompileConfig 设置更大的最大迭代次数
@@ -328,7 +319,9 @@ public class ChapterProductionGraph {
             // 从状态中获取章节内容
             checkLogicReq.setContent(state.draftContent());
 
-            GraphResponse response = graphRagClient.checkLogic(checkLogicReq);
+            String response1 = graphRagClient.checkLogic(checkLogicReq);
+            log.info("response:{}",response1);
+            GraphResponse response = JSONUtil.toBean(response1,GraphResponse.class);
             boolean passed = !response.getHasErrors();
 
             log.info("6.checkConsistency 一致性检查完成 ");

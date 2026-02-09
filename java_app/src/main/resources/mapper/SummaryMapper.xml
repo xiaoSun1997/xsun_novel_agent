@@ -7,12 +7,13 @@
     <resultMap id="BaseResultMap" type="com.xsun_novel_factory.model.entity.Summary">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="novelId" column="novel_id" jdbcType="BIGINT"/>
-            <result property="chapterRange" column="chapter_range" jdbcType="VARCHAR"/>
+            <result property="startChapterNo" column="start_chapter_no" jdbcType="VARCHAR"/>
+            <result property="endChapterNo" column="end_chapter_no" jdbcType="VARCHAR"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,novel_id,chapter_range,
+        id,novel_id,start_chapter_no,end_chapter_no,
         content
     </sql>
     
@@ -21,7 +22,8 @@
         SELECT <include refid="Base_Column_List" />
         FROM summary
         WHERE novel_id = #{novelId}
-        AND chapter_range = CONCAT(#{startChapter}, '-', #{endChapter})
+        AND start_chapter_no =#{startChapter}
+        AND end_chapter_no =#{endChapter}
     </select>
     
     <!-- 根据小说ID查询最新总结 -->

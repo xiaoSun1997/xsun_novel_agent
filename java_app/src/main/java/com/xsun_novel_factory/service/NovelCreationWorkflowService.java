@@ -1,5 +1,6 @@
 package com.xsun_novel_factory.service;
 
+import cn.hutool.json.JSONUtil;
 import com.xsun_novel_factory.agent.ChiefCoordinator;
 import com.xsun_novel_factory.agent.ContentGenerationAgent;
 import com.xsun_novel_factory.agent.QualityReviewAgent;
@@ -160,8 +161,9 @@ public class NovelCreationWorkflowService {
         checkLogicReq.setNovelId(novelId);
         checkLogicReq.setChapter(chapter);
         checkLogicReq.setContent(content);
-        
-        GraphResponse response = graphRagClient.checkLogic(checkLogicReq);
+
+        String response1 = graphRagClient.checkLogic(checkLogicReq);
+        GraphResponse response = JSONUtil.toBean(response1,GraphResponse.class);
         return !response.getHasErrors();
     }
 

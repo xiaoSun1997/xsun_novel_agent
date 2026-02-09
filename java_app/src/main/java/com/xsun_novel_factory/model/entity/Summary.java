@@ -24,9 +24,14 @@ public class Summary {
     private Long novelId;
 
     /**
-     * 章节范围（如：1-10表示第1章到第10章的总结）
+     * 开始章节
      */
-    private String chapterRange;
+    private Integer startChapterNo;
+
+    /**
+     * 开始章节
+     */
+    private Integer endChapterNo;
 
     /**
      * 章节正文内容（最终发布版本）

@@ -68,7 +68,7 @@ public class ContentGenerationAgentImpl implements ContentGenerationAgent {
      */
     private String getPreviousChaptersContent(Long novelId, int currentChapterNo) {
         // 查询前5章的内容
-        int startChapter = Math.max(1, currentChapterNo - 5);
+        int startChapter = Math.max(1, currentChapterNo - 1);
         int endChapter = currentChapterNo - 1;
         
         if (endChapter < 1) {
